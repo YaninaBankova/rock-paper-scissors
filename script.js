@@ -8,41 +8,56 @@ function getHumanChoice(){
     return choice;
 }
 
-let humanScore = 0;
-let computerScore = 0;
-
 function playRound(humanChoice, computerChoice){
     humanChoice = humanChoice.toLowerCase();
+    let humanWin = 0;
     switch(humanChoice) {
         case "rock":
             if(computerChoice === 1){
                 console.log("You lose! Paper beats rock.");
-                computerScore++;
+                humanWin = -1;
             } else if(computerChoice === 2){
                 console.log("You win! Rock beats scissors.");
-                humanScore++;
+                humanWin = 1;
             }
             break;
         case "paper":
             if(computerChoice === 2){
                 console.log("You lose! Scissors beats paper.");
-                computerScore++;
+                humanWin = -1;
             } else if(computerChoice === 0){
                 console.log("You win! Paper beats rock.");
-                humanScore++;
+                humanWin = 1;
             }
             break;
         case "scissors":
             if(computerChoice === 0){
                 console.log("You lose!  Rock beats scissors.");
-                computerScore++;
+                humanWin = -1;
             } else if(computerChoice === 1){
                 console.log("You win! Scissors beats paper.");
-                humanScore++;
+                humanWin = 1;
             }
             break;
     }
+    if(humanWin === 0){
+        console.log(`Draw! We both chose ${humanChoice}.`);
+    }
+    return humanWin;
 }
 
-playRound(getHumanChoice(), getComputerChoice());
-console.log(`Human ${humanScore} - computer ${computerScore}`);
+function playGame(){
+    let humanScore = 0;
+    let computerScore = 0;
+    for(let i = 0; i < 5; i++) {
+        let score = playRound(getHumanChoice(), getComputerChoice());
+        if(score === 1){
+            humanScore += 1;
+        } else if(score == -1){
+            computerScore += 1;
+        }
+        console.log(`Human ${humanScore} - computer ${computerScore}`);
+    } 
+}
+
+playGame();
