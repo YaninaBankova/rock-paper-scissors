@@ -18,23 +18,32 @@ function getComputerChoice(){
 }
 
 function playRound(humanChoice, computerChoice){
+    const message = document.querySelector("#message");
+
+    const score = document.querySelector("#score");
+    let lastScore = score.textContent.split(" ");
+    let humanScore = lastScore.length === 1 ? 0 : +lastScore[1];
+    let computerScore = lastScore.length === 1 ? 0 : +lastScore[4];
+
     humanChoice = humanChoice.toLowerCase();
     computerChoice = legend[computerChoice];
     let humanWin = compare(humanChoice, computerChoice);
     switch(humanWin) {
         case 0:
-            console.log(`Draw! We both chose ${humanChoice}.`);
+            message.textContent = `Draw! We both chose ${humanChoice}.`;
             break;
         case 1:
-            console.log(`You win! ${humanChoice[0].toUpperCase() + 
-                humanChoice.slice(1)} beats ${computerChoice}.`);
+            message.textContent = `You win! ${humanChoice[0].toUpperCase() + 
+                humanChoice.slice(1)} beats ${computerChoice}.`;
+            humanScore++;
             break;
         case -1:
-            console.log(`You lose! ${computerChoice[0].toUpperCase() + 
-                computerChoice.slice(1)} beats ${humanChoice}.`);
+            message.textContent = `You lose! ${computerChoice[0].toUpperCase() + 
+                computerChoice.slice(1)} beats ${humanChoice}.`;
+            computerScore++;
             break;
     }
-    return humanWin;
+    score.textContent = `Human ${humanScore} - Computer ${computerScore}`;
 }
 
 const btns = document.querySelector("#choiceBtns");
