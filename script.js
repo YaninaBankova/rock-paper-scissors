@@ -1,4 +1,18 @@
 //0: rock, 1: paper, 2: scissors
+const legend = ["rock", "paper", "scissors"];
+
+function compare(choice1, choice2){
+    if(choice1 === choice2){
+        return 0;
+    } else if((choice1 === "rock" && choice2 === "scissors") ||
+                (choice1 === "paper" && choice2 === "rock") ||
+                (choice1 === "scissors" && choice2 === "paper")){
+        return 1;
+    } else {
+        return -1;
+    }
+}
+
 function getComputerChoice(){
     return Math.floor(Math.random()*3);
 }
@@ -10,38 +24,20 @@ function getHumanChoice(){
 
 function playRound(humanChoice, computerChoice){
     humanChoice = humanChoice.toLowerCase();
-    let humanWin = 0;
-    switch(humanChoice) {
-        case "rock":
-            if(computerChoice === 1){
-                console.log("You lose! Paper beats rock.");
-                humanWin = -1;
-            } else if(computerChoice === 2){
-                console.log("You win! Rock beats scissors.");
-                humanWin = 1;
-            }
+    computerChoice = legend[computerChoice];
+    let humanWin = compare(humanChoice, computerChoice);
+    switch(humanWin) {
+        case 0:
+            console.log(`Draw! We both chose ${humanChoice}.`);
             break;
-        case "paper":
-            if(computerChoice === 2){
-                console.log("You lose! Scissors beats paper.");
-                humanWin = -1;
-            } else if(computerChoice === 0){
-                console.log("You win! Paper beats rock.");
-                humanWin = 1;
-            }
+        case 1:
+            console.log(`You win! ${humanChoice[0].toUpperCase() + 
+                humanChoice.slice(1)} beats ${computerChoice}.`);
             break;
-        case "scissors":
-            if(computerChoice === 0){
-                console.log("You lose!  Rock beats scissors.");
-                humanWin = -1;
-            } else if(computerChoice === 1){
-                console.log("You win! Scissors beats paper.");
-                humanWin = 1;
-            }
+        case -1:
+            console.log(`You lose! ${computerChoice[0].toUpperCase() + 
+                computerChoice.slice(1)} beats ${humanChoice}.`);
             break;
-    }
-    if(humanWin === 0){
-        console.log(`Draw! We both chose ${humanChoice}.`);
     }
     return humanWin;
 }
