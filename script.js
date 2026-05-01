@@ -17,11 +17,6 @@ function getComputerChoice(){
     return Math.floor(Math.random()*3);
 }
 
-function getHumanChoice(){
-    const choice = prompt("What's your choice?");
-    return choice;
-}
-
 function playRound(humanChoice, computerChoice){
     humanChoice = humanChoice.toLowerCase();
     computerChoice = legend[computerChoice];
@@ -42,18 +37,9 @@ function playRound(humanChoice, computerChoice){
     return humanWin;
 }
 
-function playGame(){
-    let humanScore = 0;
-    let computerScore = 0;
-    for(let i = 0; i < 5; i++) {
-        let score = playRound(getHumanChoice(), getComputerChoice());
-        if(score === 1){
-            humanScore += 1;
-        } else if(score == -1){
-            computerScore += 1;
-        }
-        console.log(`Human ${humanScore} - computer ${computerScore}`);
-    } 
-}
-
-playGame();
+const btns = document.querySelector("#choiceBtns");
+btns.addEventListener("click", (event) => {
+    if(event.target.nodeName === "BUTTON"){
+        playRound(event.target.innerText, getComputerChoice());
+    }
+});
