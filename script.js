@@ -44,11 +44,26 @@ function playRound(humanChoice, computerChoice){
             break;
     }
     score.textContent = `Human ${humanScore} - Computer ${computerScore}`;
+    checkScore(humanScore, computerScore);
 }
 
-const btns = document.querySelector("#choiceBtns");
-btns.addEventListener("click", (event) => {
+function checkScore(humanScore, computerScore){
+    if(Math.max(humanScore, computerScore) === 5){
+        let gameRes = document.createElement("p");
+        gameRes.textContent = humanScore === 5 ? "You are the winner!" : 
+                                                "You are the loser!";
+        let resultDiv = document.querySelector("#results");
+        resultDiv.appendChild(gameRes);
+        resultDiv.style.color = humanScore === 5 ? "green" : "red";
+        btns.removeEventListener("click", choiceClicked);
+    }
+}
+
+function choiceClicked(event){
     if(event.target.nodeName === "BUTTON"){
         playRound(event.target.innerText, getComputerChoice());
     }
-});
+}
+
+const btns = document.querySelector("#choiceBtns");
+btns.addEventListener("click", choiceClicked);
